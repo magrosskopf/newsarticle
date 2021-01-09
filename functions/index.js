@@ -8,7 +8,6 @@ var dateFormat = require('dateformat');
 // // https://firebase.google.com/docs/functions/write-firebase-functions
 
 exports.news = functions.https.onRequest((req, res) => {
-        res.send("Hello from Firebase!");
         var day = dateFormat(new Date(), "yyyy-mm-dd");
         return newsapi.v2.everything({
           q: 'nikola',
@@ -17,6 +16,8 @@ exports.news = functions.https.onRequest((req, res) => {
           page: 2
         }).then(response => {
           console.log(response);
+            res.send(response);
+
           //run(response.articles, "news").catch(console.dir)
           return null;
         });
