@@ -10,16 +10,15 @@ var dateFormat = require('dateformat');
 exports.news = functions.https.onRequest((req, res) => {
         var day = dateFormat(new Date(), "yyyy-mm-dd");
         return newsapi.v2.everything({
-          q: 'nikola',
-          sources: 'bild,der-tagesspiegel,die-zeit,focus,gruenderszene,handelsblatt,spiegel-online,t3n,wired-de,wirtschafts-woche,wired,techcrunch,the-wall-street-journal,bloomberg,business-insider',
-          from: day,
-          page: 2
+            q: 'encavis',
+            sources: 'bild,der-tagesspiegel,die-zeit,focus,gruenderszene,handelsblatt,spiegel-online,t3n,wired-de,wirtschafts-woche,wired,techcrunch,the-wall-street-journal,bloomberg,business-insider',
+            from: day,
+            page: 2 // TODO: wofür ist das?
         }).then(response => {
-          console.log(response);
-            res.send(response);
-
-          //run(response.articles, "news").catch(console.dir)
-          return null;
+            console.log(response);
+            res.send(response.articles);
+            //run(response.articles, "news").catch(console.dir)
+            return null;
         });
   });
 
