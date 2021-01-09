@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "news-article-db373"
+    "default": "news-article-db373",
+    "prod": "news-article-db373"
   }
 }
