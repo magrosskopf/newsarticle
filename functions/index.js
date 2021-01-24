@@ -95,10 +95,9 @@ exports.scheduledFunction = functions.pubsub.schedule('every 15 minutes').onRun(
                 console.log("response" + i, response)
                 i++
                 throw new Error(JSON.stringify(response));
-            }).catch(err => console.error(err));
+            }).catch(err => console.error);
         });
         return "ok"
-
     }).catch(err => console.log(err))
   });
 
