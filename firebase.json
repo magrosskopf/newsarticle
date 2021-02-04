@@ -4,6 +4,19 @@
       "npm --prefix \"$RESOURCE_DIR\" run lint"
     ],
     "source": "functions"
-   }
-   
+  },
+  "hosting": {
+    "public": "app/newsarticle/dist/newsarticle",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
 }

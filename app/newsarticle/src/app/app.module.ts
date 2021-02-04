@@ -3,10 +3,16 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { NewsfeedComponent } from './pages/newsfeed/newsfeed.component';
+import { NewscardComponent } from './elements/newscard/newscard.component';
+import { HeaderComponent } from './header/header.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    NewsfeedComponent,
+    NewscardComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
