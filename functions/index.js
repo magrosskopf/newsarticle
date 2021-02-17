@@ -12,22 +12,48 @@ const admin = require('firebase-admin');
 admin.initializeApp();
 
 const db = admin.firestore();
-
 const companyNamesCollection = db.collection('companynames');
 
-// // Create and Deploy Your First Cloud Functions
-// // https://firebase.google.com/docs/functions/write-firebase-functions
+exports.getNews = functions.https.onRequest(async (req, res)=> {
+    let companyList = req.query.companyList.split(",");
+    const now = new Date();
+    let nowTS = admin.firestore.Timestamp.fromDate(now);
+    let resNews = [];
+    /* eslint-disable no-await-in-loop */
+    for (let c of companyList) {
+        const companyNews = await admin.firestore().collection('news').doc(c).listCollections();
+        const collectionIds = []
+        companyNews.map(col => {
+           // console.log("compare", Math.abs(new Date(col.id) - new Date(now.toISOString()))/1000/60/60/24)
+            if(Math.abs(new Date(col.id) - new Date(now.toISOString()))/1000/60/60/24 <= 2) {
+                //collectionIds.push(col.id)
+                collectionIds.push(col.id)
+                return col.id
+            } 
+        });
 
-// 12.01.2020: TODO => companyNames von Firestore abrufen und NewsApi Query befüllen
 
-exports.getNews = functions.https.onRequest((req, res)=> {
-    getNewsFromDatabase().then(() =>  {
-        return res.send('ok')
-        
-    }).catch(er => {
-        console.error(er);
-    });
+        for(let id of collectionIds) {
+            let entry = await admin.firestore().collection('news').doc(c).collection(id).get()
+            entry = entry.docs;
+            for(el of entry) {
+                resNews.push(el.data())
+            }
+        }
+
+       // for(let item of collectionIds) {}
+    }
+    /* eslint-enable no-await-in-loop */
+
+
+    // for(let com of companyNews.docs){
+    //     console.log("data", com.data());
+    //     if (companyList.indexOf(com.id) > -1) {
+    //         resNews.push(com.data()) 
+    //     }
+    // }
    
+   res.send(resNews)
 })
 
 exports.fetchNews = functions.pubsub.schedule('every 1 hours').onRun(async (context) => {
@@ -36,7 +62,6 @@ exports.fetchNews = functions.pubsub.schedule('every 1 hours').onRun(async (cont
     const companyNameSnap = await admin.firestore().collection('companynames').get();
     const companyDocs = companyNameSnap.docs;
 
-    console.log("CompanyDocs Lenght: ", companyDocs.length)
 
     const now = new Date();
     const before = new Date();
@@ -56,8 +81,9 @@ exports.fetchNews = functions.pubsub.schedule('every 1 hours').onRun(async (cont
     beforeTS = beforeTS.toMillis();
 
     const date1Str = day1.toISOString().split('T')[0];
+    console.log(date1Str, day1);
     const date2Str = day2.toISOString().split('T')[0];
-    const api_key = 'EsFA307yqQq1fCYB7J8UiB632siH1CAn8XKteRRdkxcA5we0veyTxmYDFonL';
+    const api_key = keys.altApiKey;
     
     for(const com of companyDocs) {
         const batch = admin.firestore().batch();
@@ -73,7 +99,7 @@ exports.fetchNews = functions.pubsub.schedule('every 1 hours').onRun(async (cont
         const toWrite = [];
         for (const el of articles) {
             if(el.published_timestamp*1000 > beforeTS && el.published_timestamp*1000 <= nowTS) {
-                console.log('drin dat ding');
+             
                 toWrite.push(el);
             }
         }
@@ -88,91 +114,6 @@ exports.fetchNews = functions.pubsub.schedule('every 1 hours').onRun(async (cont
 
 });
 
-async function getNewsFromDatabase(companyArray) {
-    const companiesRef = db.collection('news');
-    let snapshot = await companiesRef.get(); 
-    let sortedArray = []
-    snapshot.forEach(el => {
-        console.log("snapshot", el.data())
-    })
-    return sortedArray;
-}
-
-async function getDataFromRef(refName) {
-    const companiesRef = db.collection(refName);
-    let snapshot = await companiesRef.get(); 
-    return snapshot;
-
-}
-
-async function saveNews(companyName, content, time) {
-    const aTuringRef = db.collection('news').doc(companyName).collection(time).doc();
-    if (content.length > 0) {
-        aTuringRef.set({
-            "time": time,
-            "content": content
-        });
-    }
-       
-    
-
-}
-
-async function newsApiCall(doc, index, day, res ) {
-    await newsapi.v2.everything({
-        q: doc.data().companyName,
-        sources: 'bild,der-tagesspiegel,die-zeit,focus,gruenderszene,handelsblatt,spiegel-online,t3n,wired-de,wirtschafts-woche,wired,techcrunch,the-wall-street-journal,bloomberg,business-insider',
-        from: day,
-        pageSize: 100,
-        page: 1 // Use this to page through the results.
-    }).then(response => {
-        saveNews(doc.id, {content: ["asdf", "asdf"]}, day).catch(err => console.log(err))
-        console.log("response" + index, response)
-        throw new Error(JSON.stringify(response));
-    }).catch(err => console.error(err));
-}
-
-async function apiCallAlternative(day, copmany) {
-    var options = {
-        'method': 'GET',
-        'url': 'https://gnewsapi.net/api/search?q=' + copmany + '&country=de&language=de&from=' + day + '&api_token='+ keys.altApiKey,
-        'headers': {
-        }
-    };
-    await request(options, function (error, response) {
-        if (error) throw new Error(error);
-        console.log(response.body);
-    });
-
-}
-
-function calcDate() {
-    var MS_PER_MINUTE = 60000;
-    var durationInMinutes = 1500;
-    var myStartDate = new Date(Date.now() - durationInMinutes * MS_PER_MINUTE)
-    return  dateFormat(myStartDate, "yyyy-mm-dd'T'HH:MM:ss");
-}
-
-exports.newsnews = functions.https.onRequest((req, res)=> {
-// exports.scheduledFunction = functions.pubsub.schedule('every 15 minutes').onRun((context) => {
-    var day = calcDate();
-//     getDataFromRef('companynames').then((data)=> {
-       
-//   });
-
-    var compnies = [
-        "Tesla",
-        "Apple",
-        "Facebook"
-    ]
-
-    compnies.forEach(doc => {
-        apiCallAlternative(day, doc)
-    })
-
-
-});
-
   exports.addCompany = functions.https.onRequest((req, res) => {
     let companyName = req.query.companyName;
     companyNamesCollection.doc(companyName).set({
@@ -184,19 +125,4 @@ exports.newsnews = functions.https.onRequest((req, res)=> {
       res.sendStatus(200);
 });
 
-// exports.scheduledFunction = functions.pubsub.schedule('every 15 minutes').onRun((context) => {
-//     functions.logger.info("Hello logs!", {structuredData: true});
-//     response.send("Hello from Firebase!");
-//     var day = dateFormat(new Date(), "yyyy-mm-dd");
-//     return newsapi.v2.everything({
-//       q: 'nikola',
-//       sources: 'bild,der-tagesspiegel,die-zeit,focus,gruenderszene,handelsblatt,spiegel-online,t3n,wired-de,wirtschafts-woche,wired,techcrunch,the-wall-street-journal,bloomberg,business-insider',
-//       from: day,
-//       page: 2
-//     }).then(response => {
-//       console.log(response);
-//       //run(response.articles, "news").catch(console.dir)
-//       return null;
-//     });
-// });
 
