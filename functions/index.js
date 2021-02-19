@@ -26,21 +26,20 @@ exports.getNews = functions.https.onRequest(async (req, res)=> {
         companyNews.map(col => {
            // console.log("compare", Math.abs(new Date(col.id) - new Date(now.toISOString()))/1000/60/60/24)
             if(Math.abs(new Date(col.id) - new Date(now.toISOString()))/1000/60/60/24 <= 2) {
-                //collectionIds.push(col.id)
                 collectionIds.push(col.id)
                 return col.id
             } 
         });
 
-
+        let temp = { [c]: []}
         for(let id of collectionIds) {
             let entry = await admin.firestore().collection('news').doc(c).collection(id).get()
             entry = entry.docs;
             for(el of entry) {
-                resNews.push(el.data())
+                temp[c].push(el.data())
             }
         }
-
+        resNews.push(temp)
        // for(let item of collectionIds) {}
     }
     /* eslint-enable no-await-in-loop */
