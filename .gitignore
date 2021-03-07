@@ -11,6 +11,7 @@ firebase-debug.*.log*
 .firebase/
 .firebaserc
 firebase.json
+functions/key.json
 
 # Firebase config
 

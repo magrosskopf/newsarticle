@@ -1,25 +1,38 @@
-<div class="row my-4 pl-3 pr-2 pt-3 newscard bg-dark">
-  <div class="col-12">
-    <div class="row ">
-      <div class="col-12 d-flex flex-row justify-content-between">
-        <small class="data-date text-light">18.01.2021</small>
-        <small class="data-time text-light text-right">13:05</small>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-11">
-        <small class="data-company text-primary">SpaceX</small>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-12">
-        <span class="data-headline text-white font-weight-bold h2-style">{{newsItem.headline}}</span>
-        <p class="text-white pr-0">
-          Der SpaceX-Eigentümer sucht nach einer neuen Methode, Kohlenstoff abzuscheiden. Das Preisgeld ist das bisher höchste, das dafür ausgelobt wurde.
-        </p>
-      </div>
+  <div class="row my-4 pl-3 pr-2 py-3 newscard bg-dark overflow-hidden">
+    <!-- <img src="{{newsItem.image_url}}" class="img-fluid mb-3" style="margin-top: -1rem!important; width: 180%;" alt="" srcset=""> -->
 
+    <div class="col-12">
+      <div class="row">
+        <div class="col-12">
+        </div>
+      </div>
+      <div class="row ">
+        <div class="col-12 d-flex flex-row justify-content-between">
+          <small class="data-date text-light">{{newsItem.published_datetime | date:'shortDate'}}</small>
+          <small class="data-time text-light text-right">{{newsItem.published_datetime | date:'shortTime'}}</small>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-11">
+          <small class="data-company text-primary">{{newsItem.key}}</small>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <span class="data-headline text-white font-weight-bold h2-style">{{newsItem.title}}</span>
+          <p class="text-white pr-0">
+            {{newsItem.description}}
+          </p>
+        </div>
+      </div>
+      <div class="row text-white">
+        <div class="col-6">
+          <a href="{{newsItem.article_url}}" target="_blank" rel="noopener noreferrer">zum Artikel</a>
+        </div>
+        <div class="col-6 text-right">
+          <a href="{{newsItem.source_url}}" target="_blank" rel="noopener noreferrer">{{newsItem.source_name}}</a>
+        </div>
+      </div>
     </div>
+
   </div>
-
-</div>

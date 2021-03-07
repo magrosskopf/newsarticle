@@ -1,0 +1,19 @@
+<app-header [headerText]="headerText"></app-header>
+<div class="row">
+  <div class="col-10 offset-1">
+    <input type="text" name="username" id="username" [(ngModel)]="username">
+    <span class="btn btn-primary" (click)="saveName()">Speichern</span>
+  </div>
+</div>
+<div class="row my-4 pl-3 pr-2 pt-3">
+  <div class="col-10">
+    <ul class="list-style-none px-0 w-100">
+      <li class="mb-3 w-100 d-flex flex-row justify-content-between align-items-center" *ngFor="let item of companiesArray" >
+        <label for="{{item.companyName}}" class="text-white font-weight-bold h2-style">{{item.companyName}} ({{item.altName}})<br>
+          <small class="text-light">{{item.wkn}}</small>
+        </label>
+        <input type="checkbox" name="{{item.companyName}}" id="{{item.companyName}}" (change)="toggleCompany($event, item)">
+      </li>
+    </ul>
+  </div>
+</div>
