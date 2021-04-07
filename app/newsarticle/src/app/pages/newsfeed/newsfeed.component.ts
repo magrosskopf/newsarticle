@@ -37,7 +37,7 @@ export class NewsfeedComponent implements OnInit {
             });
           }
           this.newsArray.sort((a, b) => {
-            return a.published_timestamp - b.published_timestamp;
+            return b.published_timestamp - a.published_timestamp;
           });
         });
 

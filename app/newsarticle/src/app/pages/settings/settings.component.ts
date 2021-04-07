@@ -12,8 +12,9 @@ export class SettingsComponent implements OnInit, AfterViewInit {
   headerText: any;
   companiesArray: any;
   username: string;
+  usernameIsSaved: boolean;
   constructor(private api: ApiService, private ls: LocalStorageServiceService) {
-
+    this.usernameIsSaved = false;
   }
 
   ngOnInit(): void {
@@ -71,6 +72,8 @@ export class SettingsComponent implements OnInit, AfterViewInit {
     if(this.username != undefined) {
       localStorage.setItem('username_benny', this.username)
     }
+    this.usernameIsSaved = true;
+    this.username = "";
   }
 
 }

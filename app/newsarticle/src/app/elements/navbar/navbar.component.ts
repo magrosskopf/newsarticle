@@ -12,4 +12,9 @@ export class NavbarComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  status: number = 1;
+  clickEvent(index){
+    this.status = index;
+  }
+
 }

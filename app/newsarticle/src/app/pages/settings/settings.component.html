@@ -1,19 +1,54 @@
 <app-header [headerText]="headerText"></app-header>
-<div class="row">
-  <div class="col-10 offset-1">
-    <input type="text" name="username" id="username" [(ngModel)]="username">
+<div class="row pl-3 pr-2">
+  <div class="col-10 text-white">
+    <h4>
+      Name
+    </h4>
+    <p class="text-light">
+      Falls du in der App mit deinem Namen angesprochen werden willst, kannst du ihn hier eintragen. Wir erfahren deinen
+      Namen nicht, sondern speichern ihn direkt in deinem Browser.
+    </p>
+  </div>
+</div>
+<div class="row pl-3 pr-2">
+  <div class="col-6 ">
+    <input type="text" name="username" id="username" placeholder="Name" [(ngModel)]="username">
+  </div>
+  <div class="col-4 pl-3 pr-2">
     <span class="btn btn-primary" (click)="saveName()">Speichern</span>
   </div>
 </div>
+<div class="row pl-3 pr-2" *ngIf="usernameIsSaved">
+  <div class="col-12">
+    <span class="text-success">Dein Name wurde erfolgreich geändert.</span>
+  </div>
+</div>
+
+
 <div class="row my-4 pl-3 pr-2 pt-3">
   <div class="col-10">
     <ul class="list-style-none px-0 w-100">
-      <li class="mb-3 w-100 d-flex flex-row justify-content-between align-items-center" *ngFor="let item of companiesArray" >
-        <label for="{{item.companyName}}" class="text-white font-weight-bold h2-style">{{item.companyName}} ({{item.altName}})<br>
+      <li class="mb-3 w-100 d-flex flex-row justify-content-between align-items-center"
+        *ngFor="let item of companiesArray">
+        <label for="{{item.companyName}}" class="text-white font-weight-bold h2-style">{{item.companyName}}
+          ({{item.altName}})<br>
           <small class="text-light">{{item.wkn}}</small>
         </label>
-        <input type="checkbox" name="{{item.companyName}}" id="{{item.companyName}}" (change)="toggleCompany($event, item)">
+        <input type="checkbox" name="{{item.companyName}}" id="{{item.companyName}}"
+          (change)="toggleCompany($event, item)">
       </li>
     </ul>
+  </div>
+</div>
+
+<div class="row my-4 pl-3 pr-2 pt-3">
+  <div class="col-10">
+    <a routerLink="/impressum" routerLinkActive="active">
+      Impressum
+    </a>
+    <br>
+    <small class="text-light">
+      Die bereitgestellten Inhalte/Nachrichtenartikel werden von <a href="https://gnewsapi.net/" target="_blank" rel="noopener noreferrer">gnewsapi.net</a> bereitgestellt.
+    </small>
   </div>
 </div>

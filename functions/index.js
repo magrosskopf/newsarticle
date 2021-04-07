@@ -66,7 +66,7 @@ exports.getNews = functions.https.onRequest(async (req, res)=> {
     });
 })
 
-exports.fetchNews = functions.pubsub.schedule('every 1 hours').onRun(async (context) => {
+exports.fetchNews = functions.pubsub.schedule('every 6 hours').onRun(async (context) => {
 // exports.fetchTheNews = functions.https.onRequest(async (req, res)=> {
 
     const companyNameSnap = await admin.firestore().collection('companynames').get();
@@ -98,7 +98,7 @@ exports.fetchNews = functions.pubsub.schedule('every 1 hours').onRun(async (cont
     for(const com of companyDocs) {
         const batch = admin.firestore().batch();
         //url to fetch news
-        const link = `https://gnewsapi.net/api/search?q=${com.data()['companyName']}&country=us&language=en&from=${date1Str}&to=${date2Str}&api_token=${api_key}`;
+        const link = `https://gnewsapi.net/api/search?q=${com.data()['companyName']}&country=de&language=de&from=${date1Str}&to=${date2Str}&api_token=${api_key}`;
       
         // eslint-disable-next-line no-await-in-loop
         const response = await axios.get(link);

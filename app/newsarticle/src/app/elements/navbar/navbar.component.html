@@ -1,19 +1,37 @@
-<div class="container-fluid bg-primary">
-  <div class="row text-center pt-2 text-light">
-    <div class="col">
-      <a routerLink="/" routerLinkActive="active">
+<div class="container-fluid bg-white">
+  <div class="row text-center pt-3 px-2">
+    <mat-toolbar class="toolbarNav">
+      <a routerLink="/" class="text-light font-weight-bold" (click)="clickEvent(1)"
+      [ngClass]="status == 1 ? 'active-nav' : ''" routerLinkActive="active">
+
+        <mat-icon class="material-icons color_blue">
+          dashboard</mat-icon> <br>
         News
+
       </a>
+      <a routerLink="/settings" class="text-light font-weight-bold" routerLinkActive="active" (click)="clickEvent(2)" [ngClass]="status == 2 ? 'active-nav' : ''">
+
+        <mat-icon class="material-icons color_blue">settings
+        </mat-icon> <br>
+        Settings
+
+      </a>
+      <a routerLink="/faq" class="text-light font-weight-bold" routerLinkActive="active" (click)="clickEvent(3)" [ngClass]="status == 3 ? 'active-nav' : ''">
+        <mat-icon class="material-icons color_blue">question_answer</mat-icon>
+        <br>
+        FAQ
+      </a>
+    </mat-toolbar>
+    <!-- <div class="col">
+
     </div>
     <div class="col">
-      <a routerLink="/settings" routerLinkActive="active">
+      <a routerLink="/settings" class="text-light font-weight-bold"  routerLinkActive="active">
         Settings
       </a>
     </div>
     <div class="col">
-      <a routerLink="/faq" routerLinkActive="active">
-        FAQ
-      </a>
-    </div>
+
+    </div> -->
   </div>
 </div>
