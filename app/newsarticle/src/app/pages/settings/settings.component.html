@@ -1,10 +1,7 @@
 <app-header [headerText]="headerText"></app-header>
 <div class="row pl-3 pr-2">
   <div class="col-10 text-white">
-    <h4>
-      Name
-    </h4>
-    <p class="text-light">
+    <p class="text-white">
       Falls du in der App mit deinem Namen angesprochen werden willst, kannst du ihn hier eintragen. Wir erfahren deinen
       Namen nicht, sondern speichern ihn direkt in deinem Browser.
     </p>
@@ -12,7 +9,7 @@
 </div>
 <div class="row pl-3 pr-2">
   <div class="col-6 ">
-    <input type="text" name="username" id="username" placeholder="Name" [(ngModel)]="username">
+    <input type="text" name="username" id="username" placeholder="{{ name }}" [(ngModel)]="username">
   </div>
   <div class="col-4 pl-3 pr-2">
     <span class="btn btn-primary" (click)="saveName()">Speichern</span>

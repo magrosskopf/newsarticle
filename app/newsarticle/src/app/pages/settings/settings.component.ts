@@ -16,6 +16,7 @@ export class SettingsComponent implements OnInit, AfterViewInit {
   companiesArray: any;
   username: string;
   usernameIsSaved: boolean;
+  name: string;
   constructor(private api: ApiService, private ls: LocalStorageServiceService, private _snackBar: MatSnackBar) {
     this.usernameIsSaved = false;
   }
@@ -23,8 +24,11 @@ export class SettingsComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.headerText = {
       main: 'Einstellungen',
-      sub: 'Wähle die Unternehmen aus, über die du Informationen erhalten möchtest!'
+      sub: 'Konfiguriere die App nach deinen Bedürfnissen!'
     };
+
+    this.name = localStorage.getItem('username_benny') != null ? localStorage.getItem('username_benny') : 'Name';
+
     this.api.getAllCompanies().subscribe(data => {
       console.log(data);
       this.companiesArray = data;
@@ -40,7 +44,7 @@ export class SettingsComponent implements OnInit, AfterViewInit {
                   if (element.companyName != null) {
                     console.log(element.companyName);
                     console.log(document.getElementById(element.companyName));
-                    document.getElementById(element.companyName.replace(" ", "_"))['checked'] = true;
+                    document.getElementById(element.companyName.replace(' ', '_'))['checked'] = true;
                   }
 
               });
@@ -59,11 +63,11 @@ export class SettingsComponent implements OnInit, AfterViewInit {
 
     if (e.target.checked) {
       this.ls.setItemToLocalStorage('companyList', item);
-      this.openSnackBar(item.companyName, "added to newsfeed")
+      this.openSnackBar(item.companyName, 'added to newsfeed')
 
     } else {
       this.ls.removeItemFromLocalStorage('companyList', item);
-      this.openSnackBar(item.companyName, "removed from newsfeed")
+      this.openSnackBar(item.companyName, 'removed from newsfeed')
 
     }
     console.log(this.ls.getItemFromLocalStorage('companyList'));
@@ -76,12 +80,16 @@ export class SettingsComponent implements OnInit, AfterViewInit {
     const currentName = localStorage.getItem('username_benny');
     if (currentName != null && currentName != undefined) {
       localStorage.removeItem('username_benny');
+      this.openSnackBar('Dein Name wurde erfolgreich', 'entfernt')
+
     }
     if(this.username != undefined) {
       localStorage.setItem('username_benny', this.username)
+      this.openSnackBar('Dein Name wurde erfolgreich', 'in ' + this.username + ' geändert')
+
     }
     this.usernameIsSaved = true;
-    this.username = "";
+    this.username = '';
   }
 
   openSnackBar(content, status) {
