@@ -17,6 +17,8 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { WissenComponent } from './pages/wissen/wissen.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,8 @@ import { environment } from '../environments/environment';
     NavbarComponent,
     SettingsComponent,
     FaqComponent,
-    ImpressumComponent
+    ImpressumComponent,
+    WissenComponent
   ],
   imports: [
     BrowserModule,
@@ -37,6 +40,7 @@ import { environment } from '../environments/environment';
     BrowserAnimationsModule,
     MatToolbarModule,
     MatIconModule,
+    MatSnackBarModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [ApiService],

@@ -1,6 +1,14 @@
 <app-header [headerText]="headerText"></app-header>
+<div class="container-fluid text-center d-flex justify-content-center align-items-center" *ngIf="msg">
+  <div class="row">
+    <div class="col-12">
+      <span class="text-primary h2">{{msg}}</span>
+    </div>
+  </div>
+</div>
 <div class="row">
   <div class="col-10">
+
     <app-newscard *ngFor="let item of newsArray" [newsItem]="item"></app-newscard>
     <!-- Erklärung, wenn keine Companies ausgewählt sind -->
   </div>

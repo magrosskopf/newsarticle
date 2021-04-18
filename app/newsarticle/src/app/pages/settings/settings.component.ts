@@ -2,6 +2,9 @@ import { AfterContentInit, AfterViewChecked, AfterViewInit, Component, OnInit } 
 import { ApiService } from 'src/app/services/api.service';
 import { LocalStorageServiceService } from 'src/app/services/local-storage-service.service';
 import { Company } from 'src/app/interfaces/company';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {Storage} from 'src/app/interfaces/storage';
+
 
 @Component({
   selector: 'app-settings',
@@ -13,7 +16,7 @@ export class SettingsComponent implements OnInit, AfterViewInit {
   companiesArray: any;
   username: string;
   usernameIsSaved: boolean;
-  constructor(private api: ApiService, private ls: LocalStorageServiceService) {
+  constructor(private api: ApiService, private ls: LocalStorageServiceService, private _snackBar: MatSnackBar) {
     this.usernameIsSaved = false;
   }
 
@@ -26,7 +29,7 @@ export class SettingsComponent implements OnInit, AfterViewInit {
       console.log(data);
       this.companiesArray = data;
       if (!this.ls.getItemFromLocalStorage('companyList')) {
-        this.ls.setfieldToLocalStorage('companyList', []);
+        this.ls.setfieldToLocalStorage('companyList', JSON.stringify({data:[]}));
       } else {
         let temp: Storage;
         temp = this.ls.getItemFromLocalStorage('companyList')
@@ -37,7 +40,7 @@ export class SettingsComponent implements OnInit, AfterViewInit {
                   if (element.companyName != null) {
                     console.log(element.companyName);
                     console.log(document.getElementById(element.companyName));
-                    document.getElementById(element.companyName)['checked'] = true;
+                    document.getElementById(element.companyName.replace(" ", "_"))['checked'] = true;
                   }
 
               });
@@ -53,10 +56,15 @@ export class SettingsComponent implements OnInit, AfterViewInit {
   }
 
   toggleCompany(e, item: Company, ): void {
+
     if (e.target.checked) {
       this.ls.setItemToLocalStorage('companyList', item);
+      this.openSnackBar(item.companyName, "added to newsfeed")
+
     } else {
       this.ls.removeItemFromLocalStorage('companyList', item);
+      this.openSnackBar(item.companyName, "removed from newsfeed")
+
     }
     console.log(this.ls.getItemFromLocalStorage('companyList'));
 
@@ -74,6 +82,10 @@ export class SettingsComponent implements OnInit, AfterViewInit {
     }
     this.usernameIsSaved = true;
     this.username = "";
+  }
+
+  openSnackBar(content, status) {
+    this._snackBar.open(content + ' ' + status, '', {duration: 1000});
   }
 
 }

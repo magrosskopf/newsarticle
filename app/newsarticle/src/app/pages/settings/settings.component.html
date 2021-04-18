@@ -30,18 +30,18 @@
     <ul class="list-style-none px-0 w-100">
       <li class="mb-3 w-100 d-flex flex-row justify-content-between align-items-center"
         *ngFor="let item of companiesArray">
-        <label for="{{item.companyName}}" class="text-white font-weight-bold h2-style">{{item.companyName}}
+        <label for="{{item.companyName.replace(' ', '_')}}" class="text-white font-weight-bold h2-style">{{item.companyName}}
           ({{item.altName}})<br>
           <small class="text-light">{{item.wkn}}</small>
         </label>
-        <input type="checkbox" name="{{item.companyName}}" id="{{item.companyName}}"
+        <input type="checkbox" name="{{item.companyName.replace(' ', '_')}}" id="{{item.companyName.replace(' ', '_')}}"
           (change)="toggleCompany($event, item)">
       </li>
     </ul>
   </div>
 </div>
 
-<div class="row my-4 pl-3 pr-2 pt-3">
+<div class="row my-5 pl-3 pr-2 pt-3 legal">
   <div class="col-10">
     <a routerLink="/impressum" routerLinkActive="active">
       Impressum

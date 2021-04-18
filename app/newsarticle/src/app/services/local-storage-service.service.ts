@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import {Storage} from 'src/app/interfaces/storage';
 
 @Injectable({
   providedIn: 'root'
@@ -8,26 +9,26 @@ export class LocalStorageServiceService {
   constructor() { }
 
   getItemFromLocalStorage(field: string): Storage {
+    console.log('getItemFromLocalStorage',localStorage.getItem(field));
+
     const item = JSON.parse(localStorage.getItem(field));
-    console.log('getItemFromLocalStorage',item);
 
     return item;
   }
 
-  setfieldToLocalStorage(field: string, item: any) {
+  setfieldToLocalStorage(field: string, item: string) {
     localStorage.setItem(field, item);
   }
 
   setItemToLocalStorage(field: string, item: any) {
     let storage: Storage;
     storage = this.getItemFromLocalStorage(field);
+
     if (storage.data !== undefined) {
       if (storage.data.indexOf(item) === -1) {
         storage.data.push(item);
         localStorage.removeItem(field);
         this.setfieldToLocalStorage(field, JSON.stringify(storage));
-        console.log(localStorage.getItem('companyList'));
-
       }
     }
   }
@@ -41,7 +42,7 @@ export class LocalStorageServiceService {
       }
     });
     localStorage.removeItem(field);
-    this.setfieldToLocalStorage(field, JSON.stringify({storage}));
+    this.setfieldToLocalStorage(field, JSON.stringify(storage));
   }
 
 }

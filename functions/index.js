@@ -11,7 +11,7 @@ const corsHandler = cors({
   origin: [
     'http://localhost:4200',
     'http://localhost:4200/',
-    'https://news-article-db373.web.app'
+    'https://news-article-db373.web.app/'
     // Staging URL
     // PROD URL
   ],
@@ -98,7 +98,7 @@ exports.fetchNews = functions.pubsub.schedule('every 6 hours').onRun(async (cont
     for(const com of companyDocs) {
         const batch = admin.firestore().batch();
         //url to fetch news
-        const link = `https://gnewsapi.net/api/search?q=${com.data()['companyName']}&country=de&language=de&from=${date1Str}&to=${date2Str}&api_token=${api_key}`;
+        const link = `https://gnewsapi.net/api/search?q=${com.data()['companyName']}&country=us&language=en&from=${date1Str}&to=${date2Str}&api_token=${api_key}`;
       
         // eslint-disable-next-line no-await-in-loop
         const response = await axios.get(link);

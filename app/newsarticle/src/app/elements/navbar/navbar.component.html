@@ -16,7 +16,12 @@
         Settings
 
       </a>
-      <a routerLink="/faq" class="text-light font-weight-bold" routerLinkActive="active" (click)="clickEvent(3)" [ngClass]="status == 3 ? 'active-nav' : ''">
+      <a routerLink="/wissen" class="text-light font-weight-bold" routerLinkActive="active" (click)="clickEvent(3)" [ngClass]="status == 3 ? 'active-nav' : ''">
+        <mat-icon class="material-icons color_blue">lightbulb</mat-icon>
+        <br>
+        Wissen
+      </a>
+      <a routerLink="/faq" class="text-light font-weight-bold" routerLinkActive="active" (click)="clickEvent(4)" [ngClass]="status == 4 ? 'active-nav' : ''">
         <mat-icon class="material-icons color_blue">question_answer</mat-icon>
         <br>
         FAQ

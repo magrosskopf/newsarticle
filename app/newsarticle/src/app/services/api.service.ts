@@ -3,6 +3,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {  Observable } from 'rxjs';
 import {LocalStorageServiceService} from './local-storage-service.service';
 import { Company } from '../interfaces/company';
+import {Storage} from 'src/app/interfaces/storage';
+
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +21,7 @@ export class ApiService {
 
   getNews(companyList: Storage): Observable<any> {
     console.log(companyList);
-
+    this.getNewsUrl = 'https://us-central1-news-article-db373.cloudfunctions.net/getNews?companyList=';
     if (companyList.data != undefined ) {
       if (companyList.data.length > 0) {
         companyList.data.forEach((comp, index) => {
@@ -32,9 +34,9 @@ export class ApiService {
         });
       }
     }
-    console.log(this.getNewsUrl);
+    console.log(encodeURI(this.getNewsUrl));
 
-    return this.http.get(this.getNewsUrl);
+    return this.http.get(encodeURI(this.getNewsUrl));
   }
 
   getAllCompanies(): Observable<any> {
