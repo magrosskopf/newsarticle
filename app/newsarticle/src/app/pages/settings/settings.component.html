@@ -9,7 +9,11 @@
 </div>
 <div class="row pl-3 pr-2">
   <div class="col-6 ">
-    <input type="text" name="username" id="username" placeholder="{{ name }}" [(ngModel)]="username">
+    <mat-form-field class="example-form-field text-white">
+      <mat-label class="text-light">{{ name }}</mat-label>
+      <input matInput name="username" id="username" class="text-white" placeholder="{{ name }}" [(ngModel)]="username" type="text">
+    </mat-form-field>
+
   </div>
   <div class="col-4 pl-3 pr-2">
     <span class="btn btn-primary" (click)="saveName()">Speichern</span>
@@ -31,8 +35,10 @@
           ({{item.altName}})<br>
           <small class="text-light">{{item.wkn}}</small>
         </label>
-        <input type="checkbox" name="{{item.companyName.replace(' ', '_')}}" id="{{item.companyName.replace(' ', '_')}}"
-          (change)="toggleCompany($event, item)">
+        <input type="checkbox" name="{{item.companyName.replace(' ', '_')}}" id="{{item.companyName.replace(' ', '_')}}" (change)="toggleCompany($event, item)">
+        <!--
+          <mat-checkbox class="example-margin text-primary" (change)="toggleCompany($event, item)" [color]="'warn'"  name="{{item.companyName.replace(' ', '_')}}" id="{{item.companyName.replace(' ', '_')}}" ></mat-checkbox>
+        -->
       </li>
     </ul>
   </div>
@@ -40,8 +46,14 @@
 
 <div class="row my-5 pl-3 pr-2 pt-3 legal">
   <div class="col-10">
+    <a routerLink="/faq" routerLinkActive="active" >
+      <mat-icon class="material-icons color_blue">question_answer</mat-icon> FAQ
+    </a>
+  </div>
+
+  <div class="col-10">
     <a routerLink="/impressum" routerLinkActive="active">
-      Impressum
+      <mat-icon class="material-icons color_blue">policy</mat-icon> Impressum
     </a>
     <br>
     <small class="text-light">

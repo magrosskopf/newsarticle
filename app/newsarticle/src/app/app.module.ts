@@ -19,6 +19,9 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { WissenComponent } from './pages/wissen/wissen.component';
+import {MatInputModule} from '@angular/material/input';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatBadgeModule} from '@angular/material/badge';
 
 @NgModule({
   declarations: [
@@ -38,9 +41,12 @@ import { WissenComponent } from './pages/wissen/wissen.component';
     HttpClientModule,
     FormsModule,
     BrowserAnimationsModule,
+    MatBadgeModule,
     MatToolbarModule,
     MatIconModule,
     MatSnackBarModule,
+    MatCheckboxModule,
+    MatInputModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [ApiService],

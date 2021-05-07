@@ -1,7 +1,7 @@
 <div class="container-fluid bg-white">
   <div class="row text-center pt-3 px-2">
     <mat-toolbar class="toolbarNav">
-      <a routerLink="/" class="text-light font-weight-bold" (click)="clickEvent(1)"
+      <a routerLink="/" class="text-light " (click)="clickEvent(1)"
       [ngClass]="status == 1 ? 'active-nav' : ''" routerLinkActive="active">
 
         <mat-icon class="material-icons color_blue">
@@ -9,22 +9,18 @@
         News
 
       </a>
-      <a routerLink="/settings" class="text-light font-weight-bold" routerLinkActive="active" (click)="clickEvent(2)" [ngClass]="status == 2 ? 'active-nav' : ''">
+
+      <a routerLink="/wissen" class="text-light" routerLinkActive="active" (click)="clickEvent(3)" [ngClass]="status == 3 ? 'active-nav' : ''">
+        <mat-icon class="material-icons color_blue">lightbulb</mat-icon>
+        <br>
+        Wissen
+      </a>
+      <a routerLink="/settings" class="text-light" routerLinkActive="active" (click)="clickEvent(2)" [ngClass]="status == 2 ? 'active-nav' : ''">
 
         <mat-icon class="material-icons color_blue">settings
         </mat-icon> <br>
         Settings
 
-      </a>
-      <a routerLink="/wissen" class="text-light font-weight-bold" routerLinkActive="active" (click)="clickEvent(3)" [ngClass]="status == 3 ? 'active-nav' : ''">
-        <mat-icon class="material-icons color_blue">lightbulb</mat-icon>
-        <br>
-        Wissen
-      </a>
-      <a routerLink="/faq" class="text-light font-weight-bold" routerLinkActive="active" (click)="clickEvent(4)" [ngClass]="status == 4 ? 'active-nav' : ''">
-        <mat-icon class="material-icons color_blue">question_answer</mat-icon>
-        <br>
-        FAQ
       </a>
     </mat-toolbar>
     <!-- <div class="col">

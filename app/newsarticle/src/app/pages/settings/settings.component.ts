@@ -17,6 +17,7 @@ export class SettingsComponent implements OnInit, AfterViewInit {
   username: string;
   usernameIsSaved: boolean;
   name: string;
+  checked = false;
   constructor(private api: ApiService, private ls: LocalStorageServiceService, private _snackBar: MatSnackBar) {
     this.usernameIsSaved = false;
   }
@@ -86,7 +87,7 @@ export class SettingsComponent implements OnInit, AfterViewInit {
     if(this.username != undefined) {
       localStorage.setItem('username_benny', this.username)
       this.openSnackBar('Dein Name wurde erfolgreich', 'in ' + this.username + ' geändert')
-
+      this.name = this.username;
     }
     this.usernameIsSaved = true;
     this.username = '';
