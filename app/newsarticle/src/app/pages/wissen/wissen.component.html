@@ -4,8 +4,11 @@
     <div class="col-12">
       <h2 class="text-white">Bücher</h2>
     </div>
-    <div class="col-12 col-md-4 mt-3" *ngFor="let book of books" >
+  </div>
+  <div class="row mb-5 book-container pr-5">
+    <div class="col-12 col-md-4 mt-3 mr-5" *ngFor="let book of books" >
       <div class="card text-white" >
+        <img class="card-img-top" *ngIf="book.img" src="{{book.img}}" alt="{{book.name}}">
         <div class="card-body">
           <span class="badge float-right badge-light"> {{ book.level }} </span>
           <span class="h2">{{ book.name }}</span> <br>
